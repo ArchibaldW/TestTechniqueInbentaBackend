@@ -1,13 +1,15 @@
 <?php
-require_once __DIR__."/curl.php";
+require_once __DIR__."./curl.php";
 
 class ChatBot {
     const GRAPH_URL = 'https://inbenta-graphql-swapi-prod.herokuapp.com/api';
 
     // Method for knowing if the word "force" is in the string
     public static function force($message){
-        if (stripos($message, "force")!==false){
-            return 2;
+        if (!is_null($message)){
+            if (strpos($message, "force")!==false){
+                return 2;
+            }
         }
         return $message;
     }
@@ -53,12 +55,15 @@ class ChatBot {
         //  - if no-result session variable = 2, reponse with people message and set no-result session variable to 0
         //  - else response with answer normal message
         } else if($answer["no-results"] == 1){
+            
+            var_dump($_SESSION["no-results"]);    
             $_SESSION["no-results"] += 1;
+            var_dump($_SESSION["no-results"]);  
             if ($_SESSION["no-results"] == 2){
                 $response = ChatBot::getPeople();
                 $_SESSION["no-results"] = 0;
             } else {
-                $response = $answer["message"].$_SESSION["no-results"];
+                $response = $answer["message"];
             }
         
         // If all good, then set no-result session variable to 0 and response with answer normal message

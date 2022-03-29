@@ -66,8 +66,6 @@ class Curl{
 
     // Method for setting session
     static function setSession(){
-        session_start();
-        
         // If no access token or expired token then create one token
         if (!isset($_SESSION['access_token']) || time() > $_SESSION['access_token_expiration']) {
             $response = Authentication::getAuthToken();

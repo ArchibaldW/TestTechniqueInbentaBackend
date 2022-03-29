@@ -1,9 +1,13 @@
 <?php
 ini_set('display_errors', 1);
-require_once __DIR__."/helpers/auth.php";
-require_once __DIR__."/helpers/chatbot.php";
+require_once __DIR__."./helpers/auth.php";
+require_once __DIR__."./helpers/chatbot.php";
+
 
 Curl::setCors();
+
+session_start();
+
 Curl::setSession();
 
 // If we have the session token, then try to get a response
