@@ -8,9 +8,9 @@ Curl::setCors();
 
 session_start();
 
-var_dump($_SESSION);
-
 Curl::setSession();
+
+var_dump($_SESSION);
 
 // If we have the session token, then try to get a response
 if (isset($_SESSION['session_token'])){

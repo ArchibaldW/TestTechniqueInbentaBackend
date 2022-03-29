@@ -55,10 +55,7 @@ class ChatBot {
         //  - if no-result session variable = 2, reponse with people message and set no-result session variable to 0
         //  - else response with answer normal message
         } else if($answer["no-results"] == 1){
-            
-            var_dump($_SESSION["no-results"]);    
-            $_SESSION["no-results"] += 1;
-            var_dump($_SESSION["no-results"]);  
+            $_SESSION["no-results"] += 1; 
             if ($_SESSION["no-results"] == 2){
                 $response = ChatBot::getPeople();
                 $_SESSION["no-results"] = 0;
