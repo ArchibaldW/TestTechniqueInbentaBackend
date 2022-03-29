@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__."./curl.php";
+require_once __DIR__."/curl.php";
 
 class ChatBot {
     const GRAPH_URL = 'https://inbenta-graphql-swapi-prod.herokuapp.com/api';
