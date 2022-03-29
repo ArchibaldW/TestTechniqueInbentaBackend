@@ -8,6 +8,8 @@ Curl::setCors();
 
 session_start();
 
+var_dump($_SESSION);
+
 Curl::setSession();
 
 // If we have the session token, then try to get a response
