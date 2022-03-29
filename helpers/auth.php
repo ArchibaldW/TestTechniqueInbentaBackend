@@ -68,4 +68,47 @@ class Authentication {
 
         
     }
+
+    // Method for setting cors
+    public static function setCors(){
+        if (isset($_SERVER['HTTP_ORIGIN'])) {
+            header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
+            header('Access-Control-Allow-Credentials: true');
+            header('Access-Control-Max-Age: 86400');
+        }
+    
+        if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    
+            if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
+                header("Access-Control-Allow-Methods: GET, POST, OPTIONS");         
+    
+            if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
+                header("Access-Control-Allow-Headers:        {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
+    
+            exit(0);
+        }
+    }
+
+    // Method for setting session
+    public static function setSession(){
+        // For a reason i don't understand, the sessions variables works in local but not in heroku and i don't suceed to set up them
+        session_start();
+        // If no access token or expired token then create one token
+        if (!isset($_SESSION['access_token']) || time() > $_SESSION['access_token_expiration']) {
+            $response = Authentication::getAuthToken();
+            $_SESSION['access_token'] = $response['accessToken'];
+            $_SESSION['access_token_expiration'] = $response['expiration'];
+        };
+
+
+        // If no session token then create one token
+        if (!isset($_SESSION['session_token'])) {
+            $_SESSION['session_token'] = Authentication::getSessionToken($_SESSION['access_token']);
+        }
+
+        // If no-results don't exist then initialize
+        if (!isset($_SESSION['no-results'])) {
+            $_SESSION['no-results'] = 0;
+        }
+    }
 }
